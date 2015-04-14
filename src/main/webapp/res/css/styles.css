@@ -1,0 +1,15 @@
+body {
+	background-color: #E7E7E7;
+	margin: 0 auto;
+	display: block;
+	position: relative;
+}
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #000000;
+	margin: 1em 0;
+	padding: 0;
+}

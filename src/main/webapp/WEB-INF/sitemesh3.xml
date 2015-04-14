@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<mapping path="/pages/login.jsp" decorator="/pages/template/main.jsp" />
+	<mapping path="/pages/error/*" decorator="/pages/template/main.jsp" />
+	<mapping>
+		<path>/pages/master/*</path>
+		<decorator>/pages/template/master.jsp</decorator>
+		<decorator>/pages/template/main.jsp</decorator>
+	</mapping>
+</sitemesh>
