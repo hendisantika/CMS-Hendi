@@ -32,7 +32,7 @@
 		<com.fasterxml.jackson.core.version>2.12.6.1</com.fasterxml.jackson.core.version>
 
 		<!-- MySQL Connector -->
-		<mysql-connector.version>8.0.16</mysql-connector.version>
+		<mysql-connector.version>8.0.28</mysql-connector.version>
 
 		<!-- Servlet -->
 		<javax.servlet.version>3.1.0</javax.servlet.version>
