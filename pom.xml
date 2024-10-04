@@ -45,7 +45,7 @@
 		<org.springframework.version>6.1.13</org.springframework.version>
 
 		<!-- Spring Security -->
-		<org.springframework.security.version>5.2.10.RELEASE</org.springframework.security.version>
+		<org.springframework.security.version>5.4.11</org.springframework.security.version>
 	</properties>
 
 	<dependencies>
