@@ -35,7 +35,7 @@
 		<mysql-connector.version>8.0.30</mysql-connector.version>
 
 		<!-- Servlet -->
-		<javax.servlet.version>3.1.0</javax.servlet.version>
+		<javax.servlet.version>4.0.1</javax.servlet.version>
 		<jstl.version>1.2</jstl.version>
 
 		<!-- Sitemesh -->
