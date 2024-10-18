@@ -29,7 +29,7 @@
 		<org.hibernate.version>5.6.15.Final</org.hibernate.version>
 
 		<!-- Jackson -->
-		<com.fasterxml.jackson.core.version>2.13.4.2</com.fasterxml.jackson.core.version>
+		<com.fasterxml.jackson.core.version>2.18.0</com.fasterxml.jackson.core.version>
 
 		<!-- MySQL Connector -->
 		<mysql-connector.version>8.0.28</mysql-connector.version>
