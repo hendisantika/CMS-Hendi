@@ -17,7 +17,7 @@
 		<!-- Maven Plugin -->
 		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-		<maven-war-plugin.version>3.4.0</maven-war-plugin.version>
+		<maven-war-plugin.version>3.5.0</maven-war-plugin.version>
 
 		<!-- Log4J -->
 		<log4j.version>1.2.17</log4j.version>
