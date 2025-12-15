@@ -45,7 +45,7 @@
 		<org.springframework.version>7.0.2</org.springframework.version>
 
 		<!-- Spring Security -->
-		<org.springframework.security.version>7.0.0</org.springframework.security.version>
+		<org.springframework.security.version>7.0.2</org.springframework.security.version>
 	</properties>
 
 	<dependencies>
