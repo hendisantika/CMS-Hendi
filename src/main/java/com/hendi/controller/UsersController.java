@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import com.hendi.service.IDatabaseService;
 @Controller
 @RequestMapping("/master/users*")
 public class UsersController {
-	private static final Logger LOG = Logger.getLogger(UsersController.class.getSimpleName());
+	private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
 
 	private static final String ROLE = "role";
 	private static final String ADMIN = "ADMIN";
@@ -38,8 +39,8 @@ public class UsersController {
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Users> search() {
-		Map parameters = new HashMap();
+	public List<Roles> search() {
+		Map<String, Object> parameters = new HashMap<>();
 		parameters.put(ROLE, ADMIN);
 		return databaseService.findAllUsers(parameters);
 	}
@@ -47,14 +48,14 @@ public class UsersController {
 	@RequestMapping(value = "/saveorupdate", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> saveorupdate(@RequestBody Users users) {
-		Map<String, String> jsonObject = new HashMap<String, String>();
+		Map<String, String> jsonObject = new HashMap<>();
 		try {
-			ShaPasswordEncoder shaPasswordEncoder = new ShaPasswordEncoder();
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			Roles roles = new Roles();
 			roles.setRole("USER");
 			roles.setUsers(users);
 			users.setRoles(roles);
-			users.setPassword(shaPasswordEncoder.encodePassword(users.getPassword(), null));
+			users.setPassword(passwordEncoder.encode(users.getPassword()));
 
 			databaseService.saveorUpdateUsers(users, roles);
 			jsonObject.put(RESPONSE, SUCCESS);
@@ -69,7 +70,7 @@ public class UsersController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> delete(@RequestBody Users users) {
-		Map<String, String> jsonObject = new HashMap<String, String>();
+		Map<String, String> jsonObject = new HashMap<>();
 		try {
 			databaseService.deleteUsers(users);
 			jsonObject.put(RESPONSE, SUCCESS);

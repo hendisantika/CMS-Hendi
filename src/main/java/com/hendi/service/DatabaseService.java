@@ -27,38 +27,38 @@ public class DatabaseService implements IDatabaseService {
 	private BaseService baseService;
 
 	@Override
-	public List findUsers(Map<String, Object> parameters) {
-		return baseService.runHQL("from Users where username = :username", parameters);
+	public List<Users> findUsers(Map<String, Object> parameters) {
+		return baseService.runHQL("from Users where username = :username", Users.class, parameters);
 	}
 
 	@Override
-	public List findAllUsers(Map<String, Object> parameters) {
-		return baseService.runHQL("from Roles where role != :role", parameters);
+	public List<Roles> findAllUsers(Map<String, Object> parameters) {
+		return baseService.runHQL("from Roles where role != :role", Roles.class, parameters);
 	}
 
 	@Override
 	public void saveorUpdateUsers(Users users, Roles roles) {
-		sessionFactory.getCurrentSession().saveOrUpdate(users);
-		sessionFactory.getCurrentSession().saveOrUpdate(roles);
+		sessionFactory.getCurrentSession().merge(users);
+		sessionFactory.getCurrentSession().merge(roles);
 	}
 
 	@Override
 	public void deleteUsers(Users users) {
-		sessionFactory.getCurrentSession().delete(users);
+		sessionFactory.getCurrentSession().remove(sessionFactory.getCurrentSession().merge(users));
 	}
 
 	@Override
-	public List findAllEmployee() {
-		return sessionFactory.getCurrentSession().createQuery("from Employee").list();
+	public List<Employee> findAllEmployee() {
+		return sessionFactory.getCurrentSession().createQuery("from Employee", Employee.class).list();
 	}
 
 	@Override
 	public void saveorUpdateEmployee(Employee employee) {
-		sessionFactory.getCurrentSession().saveOrUpdate(employee);
+		sessionFactory.getCurrentSession().merge(employee);
 	}
 
 	@Override
 	public void deleteEmployee(Employee employee) {
-		sessionFactory.getCurrentSession().delete(employee);
+		sessionFactory.getCurrentSession().remove(sessionFactory.getCurrentSession().merge(employee));
 	}
 }

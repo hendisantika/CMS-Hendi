@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ import com.hendi.service.IDatabaseService;
 @Controller
 @RequestMapping("/master/employee*")
 public class EmployeeController {
-	private static final Logger LOG = Logger.getLogger(EmployeeController.class.getSimpleName());
+	private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 
 	private static final String RESPONSE = "response";
 	private static final String SUCCESS = "success";
@@ -41,7 +42,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/saveorupdate", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> saveorupdate(@RequestBody Employee employee) {
-		Map<String, String> jsonObject = new HashMap<String, String>();
+		Map<String, String> jsonObject = new HashMap<>();
 		try {
 			databaseService.saveorUpdateEmployee(employee);
 			jsonObject.put(RESPONSE, SUCCESS);
@@ -56,7 +57,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> delete(@RequestBody Employee employee) {
-		Map<String, String> jsonObject = new HashMap<String, String>();
+		Map<String, String> jsonObject = new HashMap<>();
 		try {
 			databaseService.deleteEmployee(employee);
 			jsonObject.put(RESPONSE, SUCCESS);

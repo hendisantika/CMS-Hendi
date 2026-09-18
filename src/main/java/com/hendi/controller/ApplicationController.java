@@ -2,10 +2,11 @@ package com.hendi.controller;
 
 import java.util.Set;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ import com.hendi.domain.Users;
 
 @Controller
 public class ApplicationController {
-	private static final Logger LOG = Logger.getLogger(ApplicationController.class.getSimpleName());
+	private static final Logger LOG = LoggerFactory.getLogger(ApplicationController.class);
 
 	private static final String URI_LOGIN = "login";
 	private static final String URI_USERS = "master/users";
@@ -64,7 +65,7 @@ public class ApplicationController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String submitLogin(ModelMap modelMap, @ModelAttribute Users userApp) {
-		Authentication userAuthentication = new UsernamePasswordAuthenticationToken(userApp.getUsername(), userApp.getPassword());
+		Authentication userAuthentication = UsernamePasswordAuthenticationToken.unauthenticated(userApp.getUsername(), userApp.getPassword());
 
 		try {
 			Authentication authentication = authenticationManager.authenticate(userAuthentication);

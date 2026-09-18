@@ -7,20 +7,25 @@
 	<version>1.0</version>
 	<!-- <name>CMS</name> -->
 	<description>JAVA CMS Template</description>
-	
+
 	<url>http://maven.apache.org</url>
 	<properties>
 		<!-- UTF-8 Encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+		<!-- Java -->
+		<maven.compiler.release>25</maven.compiler.release>
+
 		<!-- Maven Plugin -->
 		<maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
 		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
+		<jetty-maven-plugin.version>12.1.13</jetty-maven-plugin.version>
 
-		<!-- Log4J -->
-		<log4j.version>1.2.17</log4j.version>
+		<!-- Logging -->
+		<org.slf4j.version>2.0.19</org.slf4j.version>
+		<ch.qos.logback.version>1.5.38</ch.qos.logback.version>
 
 		<!-- Apache Commons -->
 		<commons-lang.version>3.20.0</commons-lang.version>
@@ -32,11 +37,13 @@
 		<com.fasterxml.jackson.core.version>2.22.2</com.fasterxml.jackson.core.version>
 
 		<!-- MySQL Connector -->
-		<mysql-connector.version>8.0.33</mysql-connector.version>
+		<mysql-connector.version>26.7.0</mysql-connector.version>
 
-		<!-- Servlet -->
-		<javax.servlet.version>4.0.1</javax.servlet.version>
-		<jstl.version>1.2</jstl.version>
+		<!-- Jakarta EE -->
+		<jakarta.annotation.version>3.0.0</jakarta.annotation.version>
+		<jakarta.servlet.version>6.1.0</jakarta.servlet.version>
+		<jakarta.servlet.jsp.jstl.version>3.0.2</jakarta.servlet.jsp.jstl.version>
+		<org.glassfish.web.jstl.version>3.0.1</org.glassfish.web.jstl.version>
 
 		<!-- Sitemesh -->
 		<org.sitemesh.version>3.2.3</org.sitemesh.version>
@@ -46,21 +53,30 @@
 
 		<!-- Spring Security -->
 		<org.springframework.security.version>7.1.1</org.springframework.security.version>
+
+		<!-- Test -->
+		<org.junit.jupiter.version>6.1.3</org.junit.jupiter.version>
 	</properties>
 
 	<dependencies>
+		<!-- JUnit -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${org.junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Log4J -->
+		<!-- Logging -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${ch.qos.logback.version}</version>
 		</dependency>
 
 		<!-- Apache Commons -->
@@ -91,21 +107,34 @@
 
 		<!-- MySQL Connector -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<version>${mysql-connector.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Servlet -->
+		<!-- Jakarta EE -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet.version}</version>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+			<version>${jakarta.annotation.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>${jstl.version}</version>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>${jakarta.servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet.jsp.jstl</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+			<version>${jakarta.servlet.jsp.jstl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
+			<version>${org.glassfish.web.jstl.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Sitemesh -->
@@ -154,7 +183,16 @@
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>application.sql</exclude>
+					<exclude>logback.xml</exclude>
 				</excludes>
+			</resource>
+			<!-- logback.xml uses ${...} for its own substitutions, so keep it unfiltered -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>logback.xml</include>
+				</includes>
 			</resource>
 		</resources>
 
@@ -164,17 +202,17 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<release>${maven.compiler.release}</release>
+					<compilerArgs>
+						<!-- Retain parameter names for Spring's constructor/argument binding -->
+						<arg>-parameters</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.surefire</groupId>
-				<artifactId>surefire-api</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
-				<configuration>
-					<skipTest>true</skipTest>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -191,20 +229,18 @@
 
 			<!-- Jetty Server -->
 			<plugin>
-				<!-- <groupId>org.mortbay.jetty</groupId> -->
-				<!-- <artifactId>jetty-maven-plugin</artifactId> -->
-				<!-- <version>8.1.16.v20140903</version> -->
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.26</version>
+				<groupId>org.eclipse.jetty.ee11</groupId>
+				<artifactId>jetty-ee11-maven-plugin</artifactId>
+				<version>${jetty-maven-plugin.version}</version>
 				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<connectors>
-						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8282</port>
-							<maxIdleTime>10000</maxIdleTime>
-						</connector>
-					</connectors>
+					<scan>10</scan>
+					<httpConnector>
+						<port>8282</port>
+						<idleTimeout>10000</idleTimeout>
+					</httpConnector>
+					<webApp>
+						<contextPath>/CMS-Hendi</contextPath>
+					</webApp>
 				</configuration>
 			</plugin>
 		</plugins>

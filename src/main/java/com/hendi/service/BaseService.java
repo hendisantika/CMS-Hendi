@@ -3,8 +3,8 @@ package com.hendi.service;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class BaseService {
 	@Autowired
 	protected SessionFactory sessionFactory;
 
-	public List runHQL(String hql, Map<String, Object> parameters) {
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+	public <T> List<T> runHQL(String hql, Class<T> resultType, Map<String, Object> parameters) {
+		Query<T> query = sessionFactory.getCurrentSession().createQuery(hql, resultType);
 
 		if (parameters != null) {
 			for (String key : parameters.keySet()) {

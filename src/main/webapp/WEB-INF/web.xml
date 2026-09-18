@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="AIRCMS-1" version="2.5"
-		 xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app id="AIRCMS-1" version="6.1"
+		 xmlns="https://jakarta.ee/xml/ns/jakartaee"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-		 					 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+		 xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+		 					 https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd">
 	<display-name>JAVA CMS Template</display-name>
 
 	<!-- Root Context -->
@@ -13,14 +12,9 @@
 		<param-value>cms</param-value>
 	</context-param>
 
-	<!-- Application Log -->
-	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:log4j.properties</param-value>
-	</context-param>
-
+	<!-- Exposes the webapp root as the "cms" system property, used by logback.xml -->
 	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
 	</listener>
 
 	<!-- Sitemesh -->

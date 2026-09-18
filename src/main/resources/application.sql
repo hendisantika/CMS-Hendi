@@ -16,7 +16,8 @@ CREATE TABLE `tbl_roles` (
   CONSTRAINT `FK_USERS` FOREIGN KEY (`userid`) REFERENCES `tbl_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO tbl_users values(1, 'admin', SHA('admin'));
+-- BCrypt hash of 'admin' (Spring Security's BCryptPasswordEncoder, strength 10)
+INSERT INTO tbl_users values(1, 'admin', '$2a$10$eQRhB4KxdQUWpa7YhUSINuX2EqPiXVwtYhjjV5CkKGN3JOPrVcpMi');
 INSERT INTO tbl_roles VALUES (1,'ADMIN',1);
 
 DROP TABLE IF EXISTS `tbl_employee`;

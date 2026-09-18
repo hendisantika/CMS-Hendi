@@ -32,25 +32,24 @@ public class ApplicationService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<>();
 		parameters.put(USERNAME, username);
 
-		List users = databaseService.findUsers(parameters);
-		if (users.size() == 0) {
+		List<Users> users = databaseService.findUsers(parameters);
+		if (users.isEmpty()) {
 			throw new UsernameNotFoundException("User Not Found!");
 		}
 
-		Users usersEntity = (Users) users.get(0);
+		Users usersEntity = users.get(0);
 		boolean enabled = Constant.IS_ENABLED;
 		boolean accountNonExpired = Constant.ACC_NOT_EXPIRED;
 		boolean credentialsNonExpired = Constant.CREDENTIAL_NOT_EXPIRED;
 		boolean accountNonLocked = Constant.ACC_NOT_LOCKED;
 
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(usersEntity.getRoles().getRole()));
 
-		User user = new User(username, usersEntity.getPassword(), enabled,
-							 accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		return user;
+		return new User(username, usersEntity.getPassword(), enabled,
+						accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
 }

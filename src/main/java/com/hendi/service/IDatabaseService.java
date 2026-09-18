@@ -12,17 +12,17 @@ import com.hendi.domain.Users;
  * @author Budi Oktaviyan Suryanto (budi.oktaviyan@icloud.com)
  */
 public interface IDatabaseService {
-	public List findUsers(Map<String, Object> parameters);
+	List<Users> findUsers(Map<String, Object> parameters);
 
-	public List findAllUsers(Map<String, Object> parameters);
+	List<Roles> findAllUsers(Map<String, Object> parameters);
 
-	public void saveorUpdateUsers(Users users, Roles roles);
+	void saveorUpdateUsers(Users users, Roles roles);
 
-	public void deleteUsers(Users users);
+	void deleteUsers(Users users);
 
-	public List findAllEmployee();
+	List<Employee> findAllEmployee();
 
-	public void saveorUpdateEmployee(Employee employee);
+	void saveorUpdateEmployee(Employee employee);
 
-	public void deleteEmployee(Employee employee);
+	void deleteEmployee(Employee employee);
 }
