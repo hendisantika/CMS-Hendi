@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	sendCsrfTokenWithAjax();
 	resetButton();
 
 	$('#menu-toggle').click(function(e) {
@@ -10,6 +11,21 @@ $(document).ready(function() {
 		resetButton();
 	});
 });
+
+// Spring Security enables CSRF protection by default, so every state-changing
+// AJAX call has to carry the token the decorator published in <meta>.
+function sendCsrfTokenWithAjax() {
+	var token = $('meta[name="_csrf"]').attr('content');
+	var header = $('meta[name="_csrf_header"]').attr('content');
+
+	if (!token || !header) {
+		return;
+	}
+
+	$(document).ajaxSend(function(e, xhr) {
+		xhr.setRequestHeader(header, token);
+	});
+}
 
 function toggleObject(e, selector) {
 	e.preventDefault();

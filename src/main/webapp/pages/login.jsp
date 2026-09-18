@@ -18,6 +18,7 @@
 						<img class="profile-img" src="<c:url value="/res/assets/logo.png"/>">
 					</c:if>
 					<form class="form-signin" method="post" action="<c:url value="/login"/>">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="text" class="form-control" placeholder="Username" name="username" required autofocus />
 						<input type="password" class="form-control" placeholder="Password" name="password" required />
 						<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>

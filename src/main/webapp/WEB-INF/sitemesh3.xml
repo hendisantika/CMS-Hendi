@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-	<mapping path="/pages/login.jsp" decorator="/pages/template/main.jsp" />
-	<mapping path="/pages/error/*" decorator="/pages/template/main.jsp" />
+	<!-- SiteMesh 3.2 prepends this to every decorator name (it defaults to /WEB-INF/decorators/) -->
+	<decorator-prefix>/pages/template/</decorator-prefix>
+
+	<!--
+		Paths are matched against the ORIGINAL request path, not the JSP that Spring MVC
+		forwards to: WebAppContext.getRequestPath() reads jakarta.servlet.forward.servlet_path.
+		Error pages are matched on the JSP path because an ERROR dispatch sets no forward attribute.
+	-->
+	<mapping path="/login" decorator="main.jsp" />
+	<mapping path="/pages/error/*" decorator="main.jsp" />
 	<mapping>
-		<path>/pages/master/*</path>
-		<decorator>/pages/template/master.jsp</decorator>
-		<decorator>/pages/template/main.jsp</decorator>
+		<path>/master/*</path>
+		<decorator>master.jsp</decorator>
+		<decorator>main.jsp</decorator>
 	</mapping>
 </sitemesh>

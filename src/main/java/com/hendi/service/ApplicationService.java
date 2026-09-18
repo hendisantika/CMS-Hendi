@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hendi.domain.Users;
 import com.hendi.utils.Constant;
@@ -31,6 +32,7 @@ public class ApplicationService implements UserDetailsService {
 	private IDatabaseService databaseService;
 
 	@Override
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put(USERNAME, username);

@@ -7,6 +7,8 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, user-scalable=0" />
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link href="<c:url value="/res/css/plugins/bootstrap.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/res/css/plugins/bootstrap-theme.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/res/css/styles.css"/>" rel="stylesheet" type="text/css" />

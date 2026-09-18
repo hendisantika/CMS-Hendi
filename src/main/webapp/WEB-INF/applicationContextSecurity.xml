@@ -6,9 +6,15 @@
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
 						   http://www.springframework.org/schema/security
 						   http://www.springframework.org/schema/security/spring-security.xsd">
-	<security:method-security secured-enabled="true" />
-
+	<!--
+		No <security:method-security> here on purpose: nothing in this application uses
+		@Secured/@PreAuthorize, and enabling it builds the authentication manager (and with it
+		every service bean) while BeanPostProcessors are still being registered, which leaves
+		those services unproxied and breaks @Transactional.
+	-->
 	<security:http disable-url-rewriting="true">
+		<!-- Static assets must stay public, or the login page loads without its CSS -->
+		<security:intercept-url pattern="/res/**" access="permitAll" />
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/master/users" access="hasAuthority('ADMIN')" />
 		<security:intercept-url pattern="/master/employee" access="hasAnyAuthority('ADMIN','USER')" />
