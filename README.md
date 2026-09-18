@@ -5,6 +5,14 @@
 A small Java CMS template: a Spring MVC + Hibernate web application, packaged as a WAR, with user and
 employee master data behind form login.
 
+## Screenshots
+
+![Login page](docs/images/login.png)
+
+| User management | Employee data |
+|---|---|
+| ![User management](docs/images/users.png) | ![Employee data](docs/images/employee-list.png) |
+
 ## Tech stack
 
 | Component | Version |
@@ -36,6 +44,8 @@ mysql -u root -p db_testing < src/main/resources/application.sql
 
 Connection settings live in `src/main/webapp/WEB-INF/hibernate.cfg.xml` and default to
 `jdbc:mysql://localhost:3306/db_testing` with `root`/`root`.
+
+![Database schema](src/main/resources/application.png)
 
 ## Build
 
