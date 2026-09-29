@@ -24,7 +24,7 @@
 		<jetty-maven-plugin.version>12.1.13</jetty-maven-plugin.version>
 
 		<!-- Logging -->
-		<org.slf4j.version>2.0.19</org.slf4j.version>
+		<org.slf4j.version>2.0.20</org.slf4j.version>
 		<ch.qos.logback.version>1.6.4</ch.qos.logback.version>
 
 		<!-- Apache Commons -->
