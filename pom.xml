@@ -28,7 +28,7 @@
 		<ch.qos.logback.version>1.6.4</ch.qos.logback.version>
 
 		<!-- Apache Commons -->
-		<commons-lang.version>3.20.0</commons-lang.version>
+		<commons-lang.version>3.21.0</commons-lang.version>
 
 		<!-- Hibernate ORM -->
 		<org.hibernate.version>7.4.10.Final</org.hibernate.version>
