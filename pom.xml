@@ -31,7 +31,7 @@
 		<commons-lang.version>3.22.0</commons-lang.version>
 
 		<!-- Hibernate ORM -->
-		<org.hibernate.version>7.4.15.Final</org.hibernate.version>
+		<org.hibernate.version>7.4.16.Final</org.hibernate.version>
 
 		<!-- Jackson -->
 		<com.fasterxml.jackson.core.version>2.23.0</com.fasterxml.jackson.core.version>
